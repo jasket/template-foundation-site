@@ -1,0 +1,6 @@
+@import "../mixins/fonts";
+
+@include font-face("PT Sans", "../assets/fonts/PT_Sans/PT_Sans-Web-Regular", 500, normal, ttf);
+@include font-face("PT Sans", "../assets/fonts/PT_Sans/PT_Sans-Web-Italic", 500, italic, ttf);
+@include font-face("PT Sans", "../assets/fonts/PT_Sans/PT_Sans-Web-Bold", 700, normal, ttf);
+@include font-face("PT Sans", "../assets/fonts/PT_Sans/PT_Sans-Web-BoldItalic", 700, italic, ttf);
