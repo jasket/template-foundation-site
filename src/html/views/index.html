@@ -7,27 +7,15 @@ title: "Главная страница",
 
 <div class="grid-container fluid">
     <div class="grid-x">
-        <div class="cell small-6">
-            <p>Это главная страница сайта</p>
-        </div>
-        <div class="cell small-6">
-            <a href="#" class="button" data-open="modal">reveal (modal)</a>
+        <div class="cell small-12">
+            <a href="#" class="button primary" data-open="modalAlert">primary</a>
+            <a href="#" class="button secondary" data-open="modalAlert">secondary</a>
+            <a href="#" class="button success" data-open="modalAlert">success</a>
+            <a href="#" class="button warning" data-open="modalAlert">warning</a>
+            <a href="#" class="button alert" data-open="modalAlert">alert</a>
         </div>
     </div>
 </div>
 
-
-<div class="reveal"
-     id="modal"
-     data-reveal
-     data-animation-in="fade-in"
-     data-animation-out="fade-out">
-    <h1>Modal example</h1>
-    <p class="lead">Your couch. It is mine.</p>
-    <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-
+<%= _.template(require('./../includes/alert-modal.html'))(data) %>
 <%= _.template(require('./../includes/footer.html'))(data) %>

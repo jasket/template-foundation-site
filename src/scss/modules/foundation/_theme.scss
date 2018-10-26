@@ -1,0 +1,14 @@
+$primary-color: #3F3931;
+$secondary-color: #E9DCCD;
+$success-color: #849974;
+$warning-color: #E3BAB3;
+$alert-color: #E7BAA0;
+$white: #F8F3E6;
+
+$foundation-palette: (
+        primary: $primary-color,
+        secondary: $secondary-color,
+        success: $success-color,
+        warning: $warning-color,
+        alert: $alert-color,
+);

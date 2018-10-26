@@ -1,0 +1,23 @@
+<!-- Окно предупреждения -->
+<div class="reveal"
+     id="modalAlert"
+     slot="alert-modal"
+     data-reveal
+     data-animation-in="fade-in"
+     data-animation-out="fade-out">
+
+    <button class="close-button" data-close aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+    <!-- Заголовок -->
+    <p slot="alert-title" class="lead"></p>
+
+    <!-- Тест сообщения -->
+    <p slot="alert-text"></p>
+    <div class="text-right">
+        <button class="button warning margin-vertical-0" data-close>
+            Закрыть
+        </button>
+    </div>
+</div>
