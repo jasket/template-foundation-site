@@ -3,6 +3,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const PATH_JS = path.resolve(__dirname, "src/js");
 const PATH_HTML = path.resolve(__dirname, "src/html");
@@ -68,6 +70,24 @@ let config = {
             outputPath: "fonts/"
           }
         }
+      },
+      {
+        test: require.resolve("jquery"),
+        use: [
+          {
+            loader: "expose-loader",
+            options: "$"
+          }
+        ]
+      },
+      {
+        test: require.resolve("foundation-sites"),
+        use: [
+          {
+            loader: "expose-loader",
+            options: "Foundation"
+          }
+        ]
       }
     ]
   },
@@ -78,7 +98,6 @@ let config = {
   },
 
   plugins: [
-    new CleanWebpackPlugin("dist", {}),
     new MiniCssExtractPlugin({
       filename: "css/[name].bundle.css",
       chunkFilename: "css/[id].bundle.css"
@@ -103,6 +122,18 @@ module.exports = (env, argv) => {
   }
 
   if (argv.mode === "production") {
+    config.optimization = {
+      minimizer: [
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          sourceMap: false
+        }),
+        new OptimizeCSSAssetsPlugin({})
+      ]
+    };
+
+    config.plugins.push(new CleanWebpackPlugin("dist", {}));
   }
 
   return config;
