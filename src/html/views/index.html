@@ -5,21 +5,29 @@ title: "Главная страница",
 %>
 <%= _.template(require('./../includes/header.html'))(data) %>
 
-<p>Это главная страница сайта</p>
-<p>
-    <a href="#" class="button" data-open="modal">Learn More</a>
-
-    <div class="reveal"
-         id="modal"
-         data-reveal
-         data-animation-in="fade-in">
-        <h1>Awesome. I Have It.</h1>
-        <p class="lead">Your couch. It is mine.</p>
-        <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
-        <button class="close-button" data-close aria-label="Close modal" type="button">
-            <span aria-hidden="true">&times;</span>
-        </button>
+<div class="grid-container fluid">
+    <div class="grid-x">
+        <div class="cell small-6">
+            <p>Это главная страница сайта</p>
+        </div>
+        <div class="cell small-6">
+            <a href="#" class="button" data-open="modal">reveal (modal)</a>
+        </div>
     </div>
-</p>
+</div>
+
+
+<div class="reveal"
+     id="modal"
+     data-reveal
+     data-animation-in="fade-in"
+     data-animation-out="fade-out">
+    <h1>Modal example</h1>
+    <p class="lead">Your couch. It is mine.</p>
+    <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
 <%= _.template(require('./../includes/footer.html'))(data) %>
