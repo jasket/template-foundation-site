@@ -1,4 +1,4 @@
-@import "../mixins/fonts";
+@import "../mixins/mx-fonts";
 
 @include font-face("PT Sans", "../assets/fonts/PT_Sans/PT_Sans-Web-Regular", 500, normal, ttf);
 @include font-face("PT Sans", "../assets/fonts/PT_Sans/PT_Sans-Web-Italic", 500, italic, ttf);

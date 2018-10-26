@@ -1,14 +1,17 @@
 const path = require("path");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 const PATH_JS = path.resolve(__dirname, "src/js");
 const PATH_HTML = path.resolve(__dirname, "src/html");
 const PATH_ASSETS = path.resolve(__dirname, "src/assets");
 const PATH_SCSS = path.resolve(__dirname, "src/scss");
 
-module.exports = {
+const devMode = process.env.NODE_ENV !== "production";
+
+let config = {
   entry: {
     index: [`${PATH_JS}/index.js`, `${PATH_SCSS}/index.scss`],
     library: [`${PATH_JS}/library.js`, `${PATH_SCSS}/library.scss`]
@@ -17,8 +20,6 @@ module.exports = {
   output: {
     filename: "./js/[name].bundle.js"
   },
-
-  devtool: "source-map",
 
   module: {
     rules: [
@@ -33,26 +34,40 @@ module.exports = {
         use: { loader: "raw-loader" }
       },
       {
-        test: /\.(sass|scss)$/,
-        include: PATH_SCSS,
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: "css-loader",
-              options: {
-                sourceMap: true,
-                minimize: true,
-                url: false
-              }
-            },
-            {
-              loader: "sass-loader",
-              options: {
-                sourceMap: true
-              }
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          "style-loader",
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: "../"
             }
-          ]
-        })
+          },
+          "css-loader",
+          "sass-loader"
+        ]
+      },
+      {
+        test: /\.(jpe?g|png|gif|mp3)$/i,
+        include: PATH_ASSETS,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: "[name].[ext]",
+            outputPath: "img/"
+          }
+        }
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        include: PATH_ASSETS,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: "[name].[ext]",
+            outputPath: "fonts/"
+          }
+        }
       }
     ]
   },
@@ -63,20 +78,32 @@ module.exports = {
   },
 
   plugins: [
-    new ExtractTextPlugin({
-      filename: "./css/[name].bundle.css",
-      allChunks: true
+    new CleanWebpackPlugin("dist", {}),
+    new MiniCssExtractPlugin({
+      filename: "css/[name].bundle.css",
+      chunkFilename: "css/[id].bundle.css"
     }),
     new CopyWebpackPlugin([
       {
-        from: PATH_ASSETS,
-        to: "./assets"
+        from: `${PATH_ASSETS}/favicons`,
+        to: "./favicons"
       }
     ]),
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: `${PATH_HTML}/views/index.html`,
-	    inject: false,
+      inject: false
     })
   ]
+};
+
+module.exports = (env, argv) => {
+  if (argv.mode === "development") {
+    config.devtool = "source-map";
+  }
+
+  if (argv.mode === "production") {
+  }
+
+  return config;
 };
